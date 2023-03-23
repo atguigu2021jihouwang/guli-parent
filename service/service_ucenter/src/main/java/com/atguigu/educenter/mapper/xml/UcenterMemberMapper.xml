@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.educenter.mapper.UcenterMemberMapper">
+
+    <!--查询某一天注册人数-->
+    <select id="countRegisterDay" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ucenter_member uc
+        WHERE DATE(uc.gmt_create)=#{day}
+    </select>
+
+    <!--
+        因为方法的返回值是integer类型,所有resultType需要返回该类型的全路径
+        这里的 #{day},取的是: @Param("day") 中的值
+    -->
+
+
+</mapper>

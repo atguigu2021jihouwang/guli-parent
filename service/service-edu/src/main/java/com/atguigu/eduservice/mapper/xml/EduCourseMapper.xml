@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.eduservice.mapper.EduCourseMapper">
+    <!--
+        parameterType="String" 参数类型(默认不写) 例如:String courseId
+        resultType="" 返回类型
+    -->
+    <!--sql语句：根据课程id查询课程确认信息-->
+    <select id="getPublishCourseInfo" resultType="com.atguigu.eduservice.entity.vo.CoursePublishVo">
+        SELECT ec.id,ec.title,ec.price,ec.lesson_num AS lessonNum,ec.cover,
+               et.name AS teacherName,
+               es1.title AS subjectLevelOne,
+               es2.title AS subjectLevelTwo
+        FROM edu_course ec LEFT OUTER JOIN edu_course_description ecd ON ec.id=ecd.id
+                           LEFT OUTER JOIN edu_teacher et ON ec.teacher_id=et.id
+                           LEFT OUTER JOIN edu_subject es1 ON ec.subject_parent_id=es1.id
+                           LEFT OUTER JOIN edu_subject es2 ON ec.subject_id=es2.id
+        WHERE ec.id=#{courseId}
+    </select>
+
+    <select id="getBaseCourseInfo" resultType="com.atguigu.eduservice.entity.frontvo.CourseWebVo">
+        SELECT ec.id,ec.title,ec.price,ec.lesson_num AS lessonNum,ec.cover,
+               ec.buy_count AS buyCount,ec.view_count AS viewCount,
+               ecd.description,
+               et.id AS teacherId,et.name AS teacherName,et.intro,et.avatar,
+               es1.id AS subjectLevelOneId,es1.title AS subjectLevelOne,
+               es2.id AS subjectLevelTwoId,es2.title AS subjectLevelTwo
+        FROM edu_course ec LEFT OUTER JOIN edu_course_description ecd ON ec.id=ecd.id
+                           LEFT OUTER JOIN edu_teacher et ON ec.teacher_id=et.id
+                           LEFT OUTER JOIN edu_subject es1 ON ec.subject_parent_id=es1.id
+                           LEFT OUTER JOIN edu_subject es2 ON ec.subject_id=es2.id
+        WHERE ec.id=#{courseId}
+    </select>
+    <!--
+        命名空间一般为该mapper映射文件所对应maper接口所在的路径
+        <mapper namespace="com.harbsoft.com.mybatis.mapper.UserMapper">
+
+        开启二级缓存 （实体类必须序列化）
+        <cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+
+        抽取通用的SQLs
+        <sql id="user_query_where">
+            通用sql
+        </sql>
+
+        if
+        <if test="id!=null and id!=''">
+            一般是where条件语句
+         </if>
+
+         foreach
+         <foreach collection="ids" item="id" open="and (" close=")" separator="or">
+            user.id=#{id}
+         </foreach>
+
+         $
+         AND user.username LIKE '${username}%'
+
+         #
+         AND user.sex = #{sex}
+
+         resultMap对应的是表与实体类的映射   type 数据库表对应的实体类，别名或完整类名均可以
+         <resultMap type="person" id="resultMapPerson">
+            结果集的主键
+            主键  <id/>
+            <id  property="userid" column="id"/>
+            普通的列
+            column 是数据库中字段， property是实体类中字段
+            <result property="name"  column="username" />
+            <result property="addr"  column="address" />
+        </resultMap>
+
+        一对一的关系处理（一个订单对应一个用户, 此处至关于一个类中的一个字段，该字段为一个对象）
+        <association property="user" javaType="com.harbosoft.mybatis.po.User">
+            <id  property="id" column="user_id"/>
+            <result  property="username" column="username"/>
+            <result  property="sex" column="sex"/>
+            <result  property="address" column="address"/>
+        </association>
+
+        一对多的关系处理（一个用户有多个订单,此处至关于一个类中的一个字段，该字段为一个集合
+        订单信息
+        <collection property="orders" ofType="com.harbosoft.mybatis.po.Orders">
+        订单号
+             <result property="order_number" column="order_number" />
+             <result property="id" column="id" />
+        </collection>
+
+        select
+            public User findUserById(int id)
+
+
+
+    -->
+</mapper>
