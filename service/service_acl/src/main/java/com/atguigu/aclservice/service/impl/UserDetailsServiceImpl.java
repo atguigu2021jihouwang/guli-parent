@@ -22,6 +22,7 @@ import java.util.List;
  * @author qy
  * @since 2019-11-08
  */
+//创建方法根据用户名查询用户信息
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -49,6 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         com.atguigu.serurity.entity.User curUser = new com.atguigu.serurity.entity.User();
         BeanUtils.copyProperties(user,curUser);
 
+        //根据用户id获取用户菜单权限
         List<String> authorities = permissionService.selectPermissionValueByUserId(user.getId());
         SecurityUser securityUser = new SecurityUser(curUser);
         securityUser.setPermissionValueList(authorities);

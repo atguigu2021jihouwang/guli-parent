@@ -1,8 +1,7 @@
 package com.atguigu.serurity.filter;
 
-
-import com.atguigu.commonutils.utils.ResponseUtil;
 import com.atguigu.commonutils.utils.R;
+import com.atguigu.commonutils.utils.ResponseUtil;
 import com.atguigu.serurity.security.TokenManager;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;

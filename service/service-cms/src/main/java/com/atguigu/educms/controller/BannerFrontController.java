@@ -16,7 +16,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/educms/bannerfront")
-@CrossOrigin
+//@CrossOrigin 现在交给网关处理  网关已经做了跨域
 public class BannerFrontController {
 
     @Autowired

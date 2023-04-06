@@ -70,8 +70,9 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             Permission permission = allPermissionList.get(i);
             for (int m = 0; m < rolePermissionList.size(); m++) {
                 RolePermission rolePermission = rolePermissionList.get(m);
+                //判断角色菜单表中的PermissionId与菜单表中的id是否相等
                 if(rolePermission.getPermissionId().equals(permission.getId())) {
-                    permission.setSelect(true);
+                    permission.setSelect(true);  //表示选中
                 }
             }
         }
@@ -131,8 +132,9 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         } else {
             selectPermissionList = baseMapper.selectPermissionByUserId(userId);
         }
-
+        //创建菜单
         List<Permission> permissionList = PermissionHelper.bulid(selectPermissionList);
+        //将菜单以Json的格式展示
         List<JSONObject> result = MemuHelper.bulid(permissionList);
         return result;
     }
@@ -201,7 +203,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         return treeNode;
     }
 
-
     //========================递归查询所有菜单================================================
     //获取全部菜单
     @Override
@@ -216,7 +217,8 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     }
 
     //把返回所有菜单list集合进行封装的方法
-    public static List<Permission> bulidPermission(List<Permission> permissionList) { //这里只是收集了所有数据放进集合里面
+    //这个方法只用于查询一级菜单
+    public static List<Permission> bulidPermission(List<Permission> permissionList) { //这里只是收集了所有数据放进集合里面(所有菜单)
 
         //创建list集合，用于数据最终封装
         List<Permission> finalNode = new ArrayList<>();
@@ -228,13 +230,16 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
                 permissionNode.setLevel(1);
                 //根据顶层菜单，向里面进行查询子菜单，封装到finalNode里面
                 finalNode.add(selectChildren(permissionNode,permissionList));
-                //permissionNode 这个是一级菜单
-                //permissionList 这个是所有菜单
+                /**
+                 * permissionNode 这个是遍历出来的一级菜单对象
+                 * permissionList 这个是所有菜单
+                 */
             }
         }
-        return finalNode;  //这是递归完后得到的菜单集合
+        return finalNode;  //这是递归完后得到的最终菜单集合
     }
 
+    //递归操作,查询一级菜单下的二级，三级，四级菜单
     private static Permission selectChildren(Permission permissionNode, List<Permission> permissionList) {
         //1 因为向一层菜单里面放二层菜单，二层里面还要放三层，把对象初始化
         permissionNode.setChildren(new ArrayList<Permission>());
@@ -263,7 +268,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         //1 创建list集合，用于封装所有删除菜单id值
         List<String> idList = new ArrayList<>();
         //2 向idList集合设置删除菜单id
-        this.selectPermissionChildById(id,idList);
+        this.selectPermissionChildById(id,idList); //当前需要删除的第一层id
         //把当前id封装到list里面
         idList.add(id);
         baseMapper.deleteBatchIds(idList);
@@ -296,12 +301,13 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         for(String perId : permissionIds) {
             //RolePermission对象
             RolePermission rolePermission = new RolePermission();
+            //一个角色有多个菜单
             rolePermission.setRoleId(roleId);
             rolePermission.setPermissionId(perId);
             //封装到list集合
             rolePermissionList.add(rolePermission);
         }
-        //添加到角色菜单关系表
+        //批量添加到角色菜单关系表
         rolePermissionService.saveBatch(rolePermissionList);
     }
 }

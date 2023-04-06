@@ -21,8 +21,8 @@ import java.util.List;
  */
 @Api(description="菜单权限")
 @RestController
-//@RequestMapping("/admin/acl/permission")
-@RequestMapping("/acl/permission")
+@RequestMapping("/admin/acl/permission")
+//@RequestMapping("/acl/permission")
 //@CrossOrigin
 public class PermissionController {
 
@@ -59,7 +59,6 @@ public class PermissionController {
         List<Permission> list = permissionService.selectAllMenu(roleId);
         return R.ok().data("children", list);
     }
-
 
 
     @ApiOperation(value = "新增菜单")

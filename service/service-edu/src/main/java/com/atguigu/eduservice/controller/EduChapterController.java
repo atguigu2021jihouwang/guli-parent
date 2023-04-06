@@ -24,7 +24,7 @@ import java.util.List;
 @Api(description = "章节管理")
 @RestController
 @RequestMapping("/eduservice/chapter")
-@CrossOrigin
+//@CrossOrigin  //现在交给网关处理  网关已经做了跨域
 public class EduChapterController {
 
     //访问地址 http://localhost:8001/swagger-ui.html

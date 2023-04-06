@@ -31,7 +31,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/eduservice/teacher") //这里/必须加上
 //解决跨域问题
-@CrossOrigin
+//@CrossOrigin
 public class EduTeacherController {
 
     //http://localhost:8001/swagger-ui.html 访问地址

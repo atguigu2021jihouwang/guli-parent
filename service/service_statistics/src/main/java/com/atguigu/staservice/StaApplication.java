@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan(basePackages = {"com.atguigu"})
 @SpringBootApplication
 @MapperScan("com.atguigu.staservice.mapper")
-@EnableScheduling  //开启定时任务
+//@EnableScheduling  //开启定时任务
 public class StaApplication {
 
     public static void main(String[] args) {

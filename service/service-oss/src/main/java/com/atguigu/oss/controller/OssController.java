@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(description="OSS管理")
 @RestController
 @RequestMapping("/eduoss/fileoss")
-@CrossOrigin
+//@CrossOrigin
 public class OssController {
 
     //http://localhost:8002/swagger-ui.html 访问地址

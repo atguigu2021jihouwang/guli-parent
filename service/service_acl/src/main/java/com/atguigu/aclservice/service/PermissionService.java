@@ -31,6 +31,7 @@ public interface PermissionService extends IService<Permission> {
     //根据用户id获取用户菜单
     List<String> selectPermissionValueByUserId(String id);
 
+    //将创建的菜单以json格式展示
     List<JSONObject> selectPermissionByUserId(String id);
 
     //获取全部菜单

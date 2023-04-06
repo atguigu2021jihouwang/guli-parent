@@ -10,4 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>service_statistics</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>2021.1</version>
+        </dependency>
+    </dependencies>
+
 </project>

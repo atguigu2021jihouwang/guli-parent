@@ -21,6 +21,7 @@
         p.id,p.pid,p.name,p.type,p.permission_value,path,p.component,p.icon,p.status,p.is_deleted,p.gmt_create,p.gmt_modified
     </sql>
 
+    <!--根据用户的id查询-->
     <select id="selectPermissionByUserId" resultMap="permissionMap">
         select
         <include refid="columns" />
@@ -33,6 +34,7 @@
         and p.is_deleted = 0
     </select>
 
+    <!--根据用户id查询权限-->
     <select id="selectPermissionValueByUserId" resultType="String">
     	select
         p.permission_value
@@ -46,6 +48,7 @@
         and p.is_deleted = 0
     </select>
 
+    <!--如果是管理员,查询所有-->
     <select id="selectAllPermissionValue" resultType="String">
         select
         permission_value
