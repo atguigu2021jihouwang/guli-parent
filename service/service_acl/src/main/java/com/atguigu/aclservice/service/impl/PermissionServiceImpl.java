@@ -77,7 +77,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             }
         }
 
-
         List<Permission> permissionList = bulid(allPermissionList);
         return permissionList;
     }
@@ -227,7 +226,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             //得到顶层菜单 pid=0菜单
             if("0".equals(permissionNode.getPid())) {
                 //设置顶层菜单的level是1
-                permissionNode.setLevel(1);
+                permissionNode.setLevel(1);  // permissionNode : id = 1的数据
                 //根据顶层菜单，向里面进行查询子菜单，封装到finalNode里面
                 finalNode.add(selectChildren(permissionNode,permissionList));
                 /**
@@ -247,7 +246,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         //2 遍历所有菜单list集合，进行判断比较，比较id和pid值是否相同
         for(Permission it : permissionList) {
             //判断 id和pid值是否相同
-            if(permissionNode.getId().equals(it.getPid())) {
+            if(permissionNode.getId().equals(it.getPid())) {  //1195268474480156673,1195349439240048642等等多条 pid=1的数据
                 //把父菜单的level值+1
                 int level = permissionNode.getLevel()+1;
                 it.setLevel(level);
